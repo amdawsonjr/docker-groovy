@@ -49,18 +49,11 @@ RUN set -o errexit -o nounset \
 	&& ln --symbolic "${GROOVY_HOME}/bin/groovyConsole" /usr/bin/groovyConsole \
 	&& ln --symbolic "${GROOVY_HOME}/bin/groovydoc" /usr/bin/groovydoc \
 	&& ln --symbolic "${GROOVY_HOME}/bin/groovysh" /usr/bin/groovysh \
-	&& ln --symbolic "${GROOVY_HOME}/bin/java2groovy" /usr/bin/java2groovy \
-	\
-	&& echo "Adding groovy user and group" \
-	&& groupadd --system --gid 1000 groovy \
-	&& useradd --system --gid groovy --uid 1000 --shell /bin/bash --create-home groovy \
-	&& mkdir --parents /home/groovy/.groovy/grapes \
-	&& chown --recursive groovy:groovy /home/groovy
+	&& ln --symbolic "${GROOVY_HOME}/bin/java2groovy" /usr/bin/java2groovy
 
 # Create Grapes volume
-USER groovy
-VOLUME "/home/groovy/.groovy/grapes"
-WORKDIR /home/groovy
+VOLUME "/home/root/.groovy/grapes"
+WORKDIR /home/root
 
 RUN set -o errexit -o nounset \
 	&& echo "Testing Groovy installation" \

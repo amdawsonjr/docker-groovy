@@ -73,18 +73,11 @@ RUN set -o errexit -o nounset \
 	&& sed -i "s|#!/bin/sh|#!/bin/bash|" "${GROOVY_HOME}/bin/java2groovy" \
 	\
 	&& echo "Cleaning up build dependencies" \
-	&& apk del .build-deps \
-	\
-	&& echo "Adding groovy user and group" \
-	&& addgroup -S -g 1000 groovy \
-	&& adduser -D -S -G groovy -u 1000 -s /bin/ash groovy \
-	&& mkdir -p /home/groovy/.groovy/grapes \
-	&& chown -R groovy:groovy /home/groovy
+	&& apk del .build-deps
 
 # Create Grapes volume
-USER groovy
-VOLUME "/home/groovy/.groovy/grapes"
-WORKDIR /home/groovy
+VOLUME "/home/root/.groovy/grapes"
+WORKDIR /home/root
 
 RUN set -o errexit -o nounset \
 	&& echo "Testing Groovy installation" \

@@ -29,11 +29,11 @@
 
 ### Reusing the Grapes cache
 
-The local Grapes cache can be reused across containers by creating a volume and mounting it in */home/groovy/.groovy/grapes*.
+The local Grapes cache can be reused across containers by creating a volume and mounting it in */home/root/.groovy/grapes*.
 
 ```
 docker volume create --name grapes-cache
-docker run -it -v grapes-cache:/home/groovy/.groovy/grapes groovy:alpine
+docker run -it -v grapes-cache:/home/root/.groovy/grapes groovy:alpine
 ```
 
 ## Instructions for a new Groovy release

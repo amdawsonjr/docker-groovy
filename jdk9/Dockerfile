@@ -68,19 +68,12 @@ RUN set -o errexit -o nounset \
 		gnupg \
 	&& apt-get autoremove --yes --purge \
 	\
-	&& echo "Adding groovy user and group" \
-	&& groupadd --system --gid 1000 groovy \
-	&& useradd --system --gid groovy --uid 1000 --shell /bin/bash --create-home groovy \
-	&& mkdir --parents /home/groovy/.groovy/grapes \
-	&& chown --recursive groovy:groovy /home/groovy \
-	\
 	&& echo "Applying workaround for https://github.com/docker-library/openjdk/issues/101" \
 	&& bash -c '([[ ! -d $JAVA_SECURITY_DIR ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf) || (echo "Found java conf dir, package has been fixed, remove this hack"; exit -1)'
 
 # Create Grapes volume
-USER groovy
-VOLUME "/home/groovy/.groovy/grapes"
-WORKDIR /home/groovy
+VOLUME "/home/root/.groovy/grapes"
+WORKDIR /home/root
 
 RUN set -o errexit -o nounset \
 	&& echo "Testing Groovy installation" \
