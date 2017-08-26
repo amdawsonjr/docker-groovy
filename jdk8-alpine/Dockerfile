@@ -75,11 +75,17 @@ RUN set -o errexit -o nounset \
 	&& echo "Cleaning up build dependencies" \
 	&& apk del .build-deps \
 	\
+	&& echo "Creating Grapes cache for root" \
+    	&& mkdir -p /root/.groovy/grapes \
+	\
 	&& echo "Adding groovy user and group" \
 	&& addgroup -S -g 1000 groovy \
 	&& adduser -D -S -G groovy -u 1000 -s /bin/ash groovy \
 	&& mkdir -p /home/groovy/.groovy/grapes \
 	&& chown -R groovy:groovy /home/groovy
+
+# Create root Grapes volume
+VOLUME "/root/.groovy/grapes"
 
 # Create Grapes volume
 USER groovy

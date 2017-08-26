@@ -51,11 +51,17 @@ RUN set -o errexit -o nounset \
 	&& ln --symbolic "${GROOVY_HOME}/bin/groovysh" /usr/bin/groovysh \
 	&& ln --symbolic "${GROOVY_HOME}/bin/java2groovy" /usr/bin/java2groovy \
 	\
+	&& echo "Creating Grapes cache for root" \
+	&& mkdir --parents /root/.groovy/grapes \
+	\
 	&& echo "Adding groovy user and group" \
 	&& groupadd --system --gid 1000 groovy \
 	&& useradd --system --gid groovy --uid 1000 --shell /bin/bash --create-home groovy \
 	&& mkdir --parents /home/groovy/.groovy/grapes \
 	&& chown --recursive groovy:groovy /home/groovy
+
+# Create root Grapes volume
+VOLUME "/root/.groovy/grapes"
 
 # Create Grapes volume
 USER groovy

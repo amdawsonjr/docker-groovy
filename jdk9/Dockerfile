@@ -68,6 +68,9 @@ RUN set -o errexit -o nounset \
 		gnupg \
 	&& apt-get autoremove --yes --purge \
 	\
+	&& echo "Creating Grapes cache for root" \
+	&& mkdir --parents /root/.groovy/grapes \
+	\
 	&& echo "Adding groovy user and group" \
 	&& groupadd --system --gid 1000 groovy \
 	&& useradd --system --gid groovy --uid 1000 --shell /bin/bash --create-home groovy \
@@ -76,6 +79,9 @@ RUN set -o errexit -o nounset \
 	\
 	&& echo "Applying workaround for https://github.com/docker-library/openjdk/issues/101" \
 	&& bash -c '([[ ! -d $JAVA_SECURITY_DIR ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf) || (echo "Found java conf dir, package has been fixed, remove this hack"; exit -1)'
+
+# Create root Grapes volume
+VOLUME "/root/.groovy/grapes"
 
 # Create Grapes volume
 USER groovy
